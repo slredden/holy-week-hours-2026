@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holy Week · The Daily Hours</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Cinzel:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f5ede0;
+    --parchment-dark: #ede0cc;
+    --crimson: #7a1a1a;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --ash: #5a4e40;
+    --ghost: rgba(26,18,8,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: #2a1f14;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(122,26,26,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(90,40,10,0.2) 0%, transparent 50%);
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--parchment);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    border-radius: 2px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6), 0 4px 20px rgba(0,0,0,0.4), inset 0 0 60px rgba(184,134,11,0.04);
+    overflow: hidden;
+    animation: pageIn 1s ease both;
+  }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Masthead ── */
+  .masthead {
+    background: var(--crimson);
+    background-image: linear-gradient(135deg, #5a1010 0%, #7a1a1a 40%, #8a2020 100%);
+    padding: 3rem 2.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.015) 60px,
+      rgba(255,255,255,0.015) 61px
+    );
+  }
+
+  .masthead-cross {
+    font-size: 2rem;
+    color: var(--gold-light);
+    letter-spacing: 0.3em;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .masthead h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    color: #f5e8d0;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    line-height: 1.2;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  .masthead-sub {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(245,232,208,0.75);
+    margin-top: 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  .masthead-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    margin: 1.2rem auto 0;
+    opacity: 0.6;
+  }
+
+  .masthead-dates {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: rgba(245,232,208,0.55);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.8rem;
+  }
+
+  /* ── Hours Legend ── */
+  .legend {
+    background: var(--parchment-dark);
+    border-bottom: 1px solid rgba(90,78,64,0.2);
+    padding: 1.4rem 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.8rem;
+    justify-content: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--ash);
+    font-style: italic;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Day Cards ── */
+  .days {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+  }
+
+  .day-card {
+    border: 1px solid rgba(90,78,64,0.18);
+    border-radius: 2px;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .day-card:nth-child(1) { animation-delay: 0.1s; }
+  .day-card:nth-child(2) { animation-delay: 0.18s; }
+  .day-card:nth-child(3) { animation-delay: 0.26s; }
+  .day-card:nth-child(4) { animation-delay: 0.34s; }
+  .day-card:nth-child(5) { animation-delay: 0.42s; }
+  .day-card:nth-child(6) { animation-delay: 0.5s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .day-header {
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .day-header:hover { background: rgba(90,78,64,0.06); }
+
+  .day-header-left { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+
+  .day-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--crimson);
+  }
+
+  .day-liturgical {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ash);
+  }
+
+  .day-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .day-toggle {
+    font-size: 0.8rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .day-toggle.open { transform: rotate(180deg); }
+
+  .day-body {
+    border-top: 1px solid rgba(90,78,64,0.12);
+    display: none;
+    padding: 0;
+  }
+
+  .day-body.open { display: block; }
+
+  /* ── Hours within a Day ── */
+  .hour-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    border-bottom: 1px solid rgba(90,78,64,0.08);
+  }
+
+  .hour-row:last-child { border-bottom: none; }
+
+  .hour-label {
+    padding: 1rem 1.2rem 1rem 1.5rem;
+    border-right: 1px solid rgba(90,78,64,0.1);
+    background: rgba(90,78,64,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.2rem;
+  }
+
+  .hour-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .hour-time {
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--ash);
+  }
+
+  .hour-symbol {
+    font-size: 1rem;
+    margin-top: 0.3rem;
+  }
+
+  .readings-list {
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .reading-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .reading-type {
+    font-size: 0.68rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.08em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    border: 1px solid;
+  }
+
+  .tag-psalm  { color: #3a5a2a; border-color: #3a5a2a; background: rgba(58,90,42,0.06); }
+  .tag-ot     { color: #2a3a5a; border-color: #2a3a5a; background: rgba(42,58,90,0.06); }
+  .tag-ep     { color: #5a3a1a; border-color: #5a3a1a; background: rgba(90,58,26,0.06); }
+  .tag-gospel { color: var(--crimson); border-color: var(--crimson); background: rgba(122,26,26,0.06); }
+  .tag-alt    { color: #4a2a5a; border-color: #4a2a5a; background: rgba(74,42,90,0.06); }
+
+  .reading-ref { font-style: italic; }
+
+  /* ── Special day styling ── */
+  .day-card.maundy .day-header { background: rgba(42,58,90,0.05); }
+  .day-card.good-friday .day-header { background: rgba(26,18,8,0.07); }
+  .day-card.good-friday .day-name { color: #1a1208; }
+  .day-card.holy-saturday .day-header { background: rgba(90,78,64,0.06); }
+  .day-card.holy-saturday .day-name { color: var(--ash); }
+
+  /* ── Source note ── */
+  .source-note {
+    text-align: center;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--ash);
+    padding: 0 2rem 2rem;
+    line-height: 1.6;
+  }
+
+  .source-note a { color: var(--gold); text-decoration: none; }
+  .source-note a:hover { text-decoration: underline; }
+
+  .ornament {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--gold);
+    opacity: 0.4;
+    padding: 0.5rem 0 1.2rem;
+    letter-spacing: 0.4em;
+  }
+
+  @media (max-width: 520px) {
+    .masthead { padding: 2rem 1.5rem; }
+    .legend { padding: 1rem 1rem; gap: 0.5rem 1.2rem; }
+    .days { padding: 1.2rem 0.8rem; }
+    .hour-row { grid-template-columns: 110px 1fr; }
+    .hour-label { padding: 0.8rem 0.8rem 0.8rem 1rem; }
+    .readings-list { padding: 0.7rem 1rem; }
+    .day-header { padding: 0.8rem 1rem; }
+  }
+</style>
+</head>
+<body id="artifacts-component-root-html">
+<div class="page">
+
+  <div class="masthead">
+    <div class="masthead-cross">✝</div>
+    <h1>The Hours of Holy Week</h1>
+    <div class="masthead-sub">A schedule for praying the daily offices</div>
+    <div class="masthead-rule"></div>
+    <div class="masthead-dates">Year A · Revised Common Lectionary · March 30 – April 4, 2026</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3a5a2a"></div>Psalm</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2a3a5a"></div>Old Testament</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#5a3a1a"></div>Epistle</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7a1a1a"></div>Gospel</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4a2a5a"></div>Alternate</div>
+  </div>
+
+  <div class="days">
+
+    <!-- Monday -->
+    <div class="day-card" id="monday">
+      <div class="day-header" onclick="toggleDay(&#39;monday&#39;)">
+        <div class="day-header-left">
+          <span class="day-name">Monday of Holy Week</span>
+          <span class="day-liturgical">The Servant's Mission</span>
+        </div>
+        <span class="day-date">Mar 30</span>
+        <span class="day-toggle open" id="toggle-monday">▼</span>
+      </div>
+      <div class="day-body open" id="body-monday">
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Lauds</span>
+            <span class="hour-time">Dawn · ~6am</span>
+            <span class="hour-symbol">🌅</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.36.5-11" target="_blank" rel="noopener">Psalm 36:5–11</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.42.1-9" target="_blank" rel="noopener">Isaiah 42:1–9</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Terce</span>
+            <span class="hour-time">Mid-morning · ~9am</span>
+            <span class="hour-symbol">☀️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Heb.9.11-15" target="_blank" rel="noopener">Hebrews 9:11–15</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Sext</span>
+            <span class="hour-time">Midday · ~12pm</span>
+            <span class="hour-symbol">🕛</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.36.5-11" target="_blank" rel="noopener">Psalm 36:5–11</a> <em>(refrain)</em></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vespers</span>
+            <span class="hour-time">Evening · ~6pm</span>
+            <span class="hour-symbol">🌆</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-gospel">Gospel</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/John.12.1-11" target="_blank" rel="noopener">John 12:1–11</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Compline</span>
+            <span class="hour-time">Night prayer · ~9pm</span>
+            <span class="hour-symbol">🌙</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.36.5-11" target="_blank" rel="noopener">Psalm 36:5–11</a> <em>(v.7–9)</em></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.42.1-4" target="_blank" rel="noopener">Isaiah 42:1–4</a> <em>(shorter)</em></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="day-card" id="tuesday">
+      <div class="day-header" onclick="toggleDay(&#39;tuesday&#39;)">
+        <div class="day-header-left">
+          <span class="day-name">Tuesday of Holy Week</span>
+          <span class="day-liturgical">Light Before Darkness</span>
+        </div>
+        <span class="day-date">Mar 31</span>
+        <span class="day-toggle open" id="toggle-tuesday">▼</span>
+      </div>
+      <div class="day-body open" id="body-tuesday" style="display: block;">
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Lauds</span>
+            <span class="hour-time">Dawn · ~6am</span>
+            <span class="hour-symbol">🌅</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.71.1-14" target="_blank" rel="noopener">Psalm 71:1–14</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.49.1-7" target="_blank" rel="noopener">Isaiah 49:1–7</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Terce</span>
+            <span class="hour-time">Mid-morning · ~9am</span>
+            <span class="hour-symbol">☀️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/1Cor.1.18-31" target="_blank" rel="noopener">1 Corinthians 1:18–31</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Sext</span>
+            <span class="hour-time">Midday · ~12pm</span>
+            <span class="hour-symbol">🕛</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.71.1-8" target="_blank" rel="noopener">Psalm 71:1–8</a> <em>(refrain)</em></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vespers</span>
+            <span class="hour-time">Evening · ~6pm</span>
+            <span class="hour-symbol">🌆</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-gospel">Gospel</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/John.12.20-36" target="_blank" rel="noopener">John 12:20–36</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Compline</span>
+            <span class="hour-time">Night prayer · ~9pm</span>
+            <span class="hour-symbol">🌙</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.71.9-14" target="_blank" rel="noopener">Psalm 71:9–14</a></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="day-card" id="wednesday">
+      <div class="day-header" onclick="toggleDay(&#39;wednesday&#39;)">
+        <div class="day-header-left">
+          <span class="day-name">Wednesday of Holy Week</span>
+          <span class="day-liturgical">Spy Wednesday · Betrayal</span>
+        </div>
+        <span class="day-date">Apr 1</span>
+        <span class="day-toggle" id="toggle-wednesday">▼</span>
+      </div>
+      <div class="day-body" id="body-wednesday" style="display: none;">
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Lauds</span>
+            <span class="hour-time">Dawn · ~6am</span>
+            <span class="hour-symbol">🌅</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.70" target="_blank" rel="noopener">Psalm 70</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.50.4-9" target="_blank" rel="noopener">Isaiah 50:4–9a</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Terce</span>
+            <span class="hour-time">Mid-morning · ~9am</span>
+            <span class="hour-symbol">☀️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Heb.12.1-3" target="_blank" rel="noopener">Hebrews 12:1–3</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Sext</span>
+            <span class="hour-time">Midday · ~12pm</span>
+            <span class="hour-symbol">🕛</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.70" target="_blank" rel="noopener">Psalm 70</a> <em>(refrain)</em></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vespers</span>
+            <span class="hour-time">Evening · ~6pm</span>
+            <span class="hour-symbol">🌆</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-gospel">Gospel</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/John.13.21-32" target="_blank" rel="noopener">John 13:21–32</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Compline</span>
+            <span class="hour-time">Night prayer · ~9pm</span>
+            <span class="hour-symbol">🌙</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.70" target="_blank" rel="noopener">Psalm 70</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.50.4-9" target="_blank" rel="noopener">Isaiah 50:4–9a</a> <em>(shorter)</em></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maundy Thursday -->
+    <div class="day-card maundy" id="thursday">
+      <div class="day-header" onclick="toggleDay(&#39;thursday&#39;)">
+        <div class="day-header-left">
+          <span class="day-name">Maundy Thursday</span>
+          <span class="day-liturgical">The Last Supper · Foot Washing</span>
+        </div>
+        <span class="day-date">Apr 2</span>
+        <span class="day-toggle" id="toggle-thursday">▼</span>
+      </div>
+      <div class="day-body" id="body-thursday" style="display: none;">
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Lauds</span>
+            <span class="hour-time">Dawn · ~6am</span>
+            <span class="hour-symbol">🌅</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.116.1-19" target="_blank" rel="noopener">Psalm 116:1–2, 12–19</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Exod.12.1-14" target="_blank" rel="noopener">Exodus 12:1–4, (5–10), 11–14</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Terce</span>
+            <span class="hour-time">Mid-morning · ~9am</span>
+            <span class="hour-symbol">☀️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/1Cor.11.23-26" target="_blank" rel="noopener">1 Corinthians 11:23–26</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Sext</span>
+            <span class="hour-time">Midday · ~12pm</span>
+            <span class="hour-symbol">🕛</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.116.12-19" target="_blank" rel="noopener">Psalm 116:12–19</a> <em>(refrain)</em></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vespers</span>
+            <span class="hour-time">Evening · ~6pm</span>
+            <span class="hour-symbol">🌆</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-gospel">Gospel</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/John.13.1-35" target="_blank" rel="noopener">John 13:1–17, 31b–35</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vigil</span>
+            <span class="hour-time">Night watch · ~11pm</span>
+            <span class="hour-symbol">🕯️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.116.1-19" target="_blank" rel="noopener">Psalm 116:1–2, 12–19</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/1Cor.11.23-26" target="_blank" rel="noopener">1 Corinthians 11:23–26</a> <em>(repeated in vigil)</em></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Good Friday -->
+    <div class="day-card good-friday" id="friday">
+      <div class="day-header" onclick="toggleDay(&#39;friday&#39;)">
+        <div class="day-header-left">
+          <span class="day-name">Good Friday</span>
+          <span class="day-liturgical">The Passion of Our Lord</span>
+        </div>
+        <span class="day-date">Apr 3</span>
+        <span class="day-toggle" id="toggle-friday">▼</span>
+      </div>
+      <div class="day-body" id="body-friday" style="display: none;">
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Lauds</span>
+            <span class="hour-time">Dawn · ~6am</span>
+            <span class="hour-symbol">🌅</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.22" target="_blank" rel="noopener">Psalm 22</a> <em>(vv.1–21)</em></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.52.13-53.12" target="_blank" rel="noopener">Isaiah 52:13–53:12</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Terce</span>
+            <span class="hour-time">Mid-morning · ~9am</span>
+            <span class="hour-symbol">☀️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Heb.10.16-25" target="_blank" rel="noopener">Hebrews 10:16–25</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-alt">Alt.</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Heb.4.14-16" target="_blank" rel="noopener">Hebrews 4:14–16</a>; <a href="https://biblia.com/bible/niv/Heb.5.7-9" target="_blank" rel="noopener">Hebrews 5:7–9</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Sext</span>
+            <span class="hour-time">Noon (3-hour vigil)</span>
+            <span class="hour-symbol">✝️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.22" target="_blank" rel="noopener">Psalm 22</a> <em>(full; read slowly)</em></span></div>
+            <div class="reading-item"><span class="reading-type tag-gospel">Gospel</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/John.18.1-19.42" target="_blank" rel="noopener">John 18:1–19:42</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">None</span>
+            <span class="hour-time">3pm · Hour of death</span>
+            <span class="hour-symbol">🩸</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.22.22-31" target="_blank" rel="noopener">Psalm 22:22–31</a> <em>(closing praise)</em></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vespers</span>
+            <span class="hour-time">Evening · ~6pm</span>
+            <span class="hour-symbol">🌆</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Isa.52.13-53.12" target="_blank" rel="noopener">Isaiah 52:13–53:12</a> <em>(reprise)</em></span></div>
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Heb.4.14-16" target="_blank" rel="noopener">Hebrews 4:14–16</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Compline</span>
+            <span class="hour-time">Night prayer · ~9pm</span>
+            <span class="hour-symbol">🌙</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.22.1-11" target="_blank" rel="noopener">Psalm 22:1–11</a> <em>(lament in the dark)</em></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Holy Saturday -->
+    <div class="day-card holy-saturday" id="saturday">
+      <div class="day-header" onclick="toggleDay(&#39;saturday&#39;)">
+        <div class="day-header-left">
+          <span class="day-name">Holy Saturday</span>
+          <span class="day-liturgical">The Great Silence</span>
+        </div>
+        <span class="day-date">Apr 4</span>
+        <span class="day-toggle" id="toggle-saturday">▼</span>
+      </div>
+      <div class="day-body" id="body-saturday" style="display: none;">
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Lauds</span>
+            <span class="hour-time">Dawn · ~6am</span>
+            <span class="hour-symbol">🌅</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.31.1-16" target="_blank" rel="noopener">Psalm 31:1–4, 15–16</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Job.14.1-14" target="_blank" rel="noopener">Job 14:1–14</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-alt">Alt.</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Lam.3.1-24" target="_blank" rel="noopener">Lamentations 3:1–9, 19–24</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Terce</span>
+            <span class="hour-time">Mid-morning · ~9am</span>
+            <span class="hour-symbol">☀️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ep">Epistle</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/1Pet.4.1-8" target="_blank" rel="noopener">1 Peter 4:1–8</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Sext</span>
+            <span class="hour-time">Midday · ~12pm</span>
+            <span class="hour-symbol">🕛</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.31.1-4" target="_blank" rel="noopener">Psalm 31:1–4</a> <em>(silent vigil)</em></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Vespers</span>
+            <span class="hour-time">Evening · ~6pm</span>
+            <span class="hour-symbol">🌆</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-gospel">Gospel</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Matt.27.57-66" target="_blank" rel="noopener">Matthew 27:57–66</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-alt">Alt.</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/John.19.38-42" target="_blank" rel="noopener">John 19:38–42</a></span></div>
+          </div>
+        </div>
+        <div class="hour-row">
+          <div class="hour-label">
+            <span class="hour-name">Easter Vigil</span>
+            <span class="hour-time">After dark · ~9pm+</span>
+            <span class="hour-symbol">🕯️</span>
+          </div>
+          <div class="readings-list">
+            <div class="reading-item"><span class="reading-type tag-ot">OT</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Lam.3.1-24" target="_blank" rel="noopener">Lamentations 3:1–9, 19–24</a> <em>or</em> <a href="https://biblia.com/bible/niv/Job.14.1-14" target="_blank" rel="noopener">Job 14:1–14</a></span></div>
+            <div class="reading-item"><span class="reading-type tag-psalm">Psalm</span><span class="reading-ref"><a href="https://biblia.com/bible/niv/Ps.31.15-16" target="_blank" rel="noopener">Psalm 31:15–16</a> <em>(waiting in hope)</em></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.days -->
+
+  <div class="ornament">· · · ✝ · · ·</div>
+
+  <div class="source-note">
+    Readings from the <a href="https://lectionary.library.vanderbilt.edu/" target="_blank">Revised Common Lectionary</a>,
+    a service of the Vanderbilt Divinity Library · Year A, 2026 ·
+    The Hours follow the traditional pattern of Lauds, Terce, Sext, None, Vespers, and Compline.
+    Psalm assignments at each hour are drawn from the day's appointed psalm;
+    all other readings follow the RCL pericopes for Holy Week.
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+  function toggleDay(id) {
+    const body = document.getElementById('body-' + id);
+    const toggle = document.getElementById('toggle-' + id);
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    body.style.display = isOpen ? 'none' : 'block';
+    toggle.classList.toggle('open', !isOpen);
+  }
+
+  // Initialize: Monday open, rest closed
+  document.querySelectorAll('.day-body').forEach(b => {
+    if (!b.classList.contains('open')) b.style.display = 'none';
+  });
+  document.getElementById('toggle-monday').classList.add('open');
+</script>
+
+
+</body></html>
