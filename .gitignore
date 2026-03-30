@@ -1,0 +1,14 @@
+# Exclude Claude UI framework bundles from the saved webpage
+Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/*.js
+Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/*.js.gz
+Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/*.css
+Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/*.html
+Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/lupk8zyo
+Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/468742119653388
+
+# Keep the actual prayer guide content
+!Holy Week Hours_ Daily Prayer Schedule & Readings _ Claude_files/saved_resource.html
+
+# Python
+__pycache__/
+*.pyc
